@@ -1,19 +1,20 @@
 #include <iostream>
 #include <queue>
+#include "mainBST.cpp"
 using namespace std;
 
-TreeNode *searchBST(TreeNode *root, int val)
+Node *searchBST(Node *root, int val)
 {
     if (root == NULL)
     {
         return NULL;
     }
-    if (root->val == val)
+    if (root->data == val)
     {
         return root;
     }
 
-    if (root->val > val)
+    if (root->data > val)
     {
         return searchBST(root->left, val);
     }
