@@ -5,6 +5,7 @@ public class MagicNumber {
         int ans = 0;
         int base = 5;
         while(n > 0){
+           // so the basicly the main point of this code is to turn 
             // Find Last Digit of Binary number by and with 1
             int lastDigit = n & 1;
             ans = lastDigit * base;
