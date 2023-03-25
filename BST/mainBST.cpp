@@ -190,11 +190,13 @@ Node *DeleteNode(Node *&root, int val)
     }
     else if (root->data > val)
     {
+        // calll for the left
         root->left = DeleteNode(root->left, val);
         return root;
     }
     else
     {
+        // call for the right
         root->right = DeleteNode(root->right, val);
         return root;
     }
