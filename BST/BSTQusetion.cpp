@@ -27,7 +27,7 @@ Node *searchBST(Node *root, int val)
 
 // vaild bst for the
 // Approch 1
-bool solve(Node *root, int min, int max)
+bool solve1(Node *root, int min, int max)
 {
     if (root == NULL)
     {
@@ -35,8 +35,8 @@ bool solve(Node *root, int min, int max)
     }
     if (root->data > min && root->data < max)
     {
-        bool left = solve(root->left, min, root->data);
-        bool right = solve(root->right, root->data, max);
+        bool left = solve1(root->left, min, root->data);
+        bool right = solve1(root->right, root->data, max);
         return (right && left);
     }
     else
@@ -46,7 +46,7 @@ bool solve(Node *root, int min, int max)
 }
 bool isValidBST(Node *root)
 {
-    return solve(root, INT_MIN, INT_MAX);
+    return solve1(root, INT_MIN, INT_MAX);
 }
 
 // Approch 2
@@ -78,4 +78,31 @@ bool isValidBST(Node *root)
         }
     }
     return true;
+}
+
+//  Kth Smallest Element in a BST------------------------------------
+int solve(Node *root, int &index, int k)
+{
+    if (root == NULL)
+    {
+        return -1;
+    }
+    int left = solve(root->left, index, k);
+    if (left != -1)
+    {
+        return left;
+    }
+    // node case for the
+    index++;
+    if (index == k)
+    {
+        return root->data;
+    }
+    return solve(root->right, index, k);
+}
+int kthSmallest(Node *root, int k)
+{
+    int index = 0;
+    int ans = solve(root, index, k);
+    return ans;
 }
