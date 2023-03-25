@@ -142,6 +142,63 @@ void takeinput(Node *&root)
         cin >> data;
     }
 }
+
+// function for the delete the Node for the BST
+Node *DeleteNode(Node *&root, int val)
+{
+    // base condition that is root is NULL the
+    if (root == NULL)
+    {
+        return NULL;
+    }
+
+    if (root->data == val)
+    {
+        // having 0 child
+        if (root->left == NULL && root->right == NULL)
+        {
+            delete root;
+            return NULL;
+        }
+
+        // having 1 child  ]
+        // it consist of two cases it is
+
+        // case having child having at left and right as null
+        if (root->left != NULL && root->right == NULL)
+        {
+            Node *temp = root->left;
+            delete root;
+            return temp;
+        }
+        // case having child having at right and left as null
+        if (root->right != NULL && root->right == NULL)
+        {
+            Node *temp = root->right;
+            delete root;
+            return temp;
+        }
+
+        // having 2 child
+        if (root->right != NULL && root->right != NULL)
+        {
+            int Minval = minval(root->right)->data;
+            root->data = Minval;
+            root->right = DeleteNode(root->right, Minval);
+            return root;
+        }
+    }
+    else if (root->data > val)
+    {
+        root->left = DeleteNode(root->left, val);
+        return root;
+    }
+    else
+    {
+        root->right = DeleteNode(root->right, val);
+        return root;
+    }
+}
 int main()
 
 {
@@ -162,5 +219,10 @@ int main()
     cout << minval(root)->data;
     cout << "\n max value of the treee \n";
     cout << maxval(root)->data;
+    cout << "Enter the value to be delelte in\n";
+    int val;
+    cin >> val;
+    root = DeleteNode(root, val);
+    levelOrderTraversal(root);
     return 0;
 }
