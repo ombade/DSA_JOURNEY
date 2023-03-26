@@ -133,13 +133,56 @@ Node *LCA(Node *root, int n1, int n2)
 
 // 2) recursive approch
 
-TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q)
+Node *lowestCommonAncestor(Node *root, Node *p, Node *q)
 {
-    if (root == NULL || p->val == root->val || q->val == root->val)
+    if (root == NULL || p->data == root->data || q->data == root->data)
         return root;
-    if (p->val < root->val && q->val < root->val)
+    if (p->data < root->data && q->data < root->data)
         return lowestCommonAncestor(root->left, p, q);
-    if (p->val > root->val && q->val > root->val)
+    if (p->data > root->data && q->data > root->data)
         return lowestCommonAncestor(root->right, p, q);
     return root;
+}
+
+// Predecessor and Successor
+void findPreSuc(Node *root, Node *&pre, Node *&suc, int key)
+{
+    // Base case
+    if (root == NULL)
+        return;
+
+    // If key is present at root
+    if (root->data == key)
+    {
+        // the maximum value in left subtree is predecessor
+        if (root->left != NULL)
+        {
+            Node *tmp = root->left;
+            while (tmp->right)
+                tmp = tmp->right;
+            pre = tmp;
+        }
+
+        // the minimum value in right subtree is successor
+        if (root->right != NULL)
+        {
+            Node *tmp = root->right;
+            while (tmp->left)
+                tmp = tmp->left;
+            suc = tmp;
+        }
+        return;
+    }
+
+    // If key is smaller than root's key, go to left subtree
+    if (root->data > key)
+    {
+        suc = root;
+        findPreSuc(root->left, pre, suc, key);
+    }
+    else // go to right subtree
+    {
+        pre = root;
+        findPreSuc(root->right, pre, suc, key);
+    }
 }
