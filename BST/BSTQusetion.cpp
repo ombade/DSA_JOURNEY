@@ -221,3 +221,39 @@ bool twoSumInBST(Node *root, int target)
     }
     return false;
 }
+
+// fatern the bst in sorted linked list
+void inordersum(Node *root, vector<int> &v)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+    inordersum(root->left, v);
+    v.push_back(root->data);
+    inordersum(root->right, v);
+    // so the basicly  in this funfction we are doing the inorder traversal and puting the sorted bst value into tthe vestor
+}
+Node *flatten(Node *root)
+{
+    vector<int> v;
+
+    inordersum(root, v);
+    int size = v.size();
+    // step 1 creating the node
+    Node *NewNode = new Node(v[0]);
+    Node *curr = NewNode;
+    // step 2 changing the links of the node
+    for (int i = 1; i < size; i++)
+    {
+        Node *temp = new Node(v[i]);
+        curr->right = temp;
+        curr->left = NULL;
+        curr = temp;
+    }
+
+    // step 3 making the last pointer as the null ie left and right
+    curr->left = NULL;
+    curr->right = NULL;
+    return NewNode;
+}
