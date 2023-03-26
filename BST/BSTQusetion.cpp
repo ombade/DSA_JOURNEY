@@ -186,3 +186,38 @@ void findPreSuc(Node *root, Node *&pre, Node *&suc, int key)
         findPreSuc(root->right, pre, suc, key);
     }
 }
+
+// Two Sum IV - Input is a BST--------------
+
+void inordersum(Node *root, vector<int> &v)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+    inordersum(root->left, v);
+    v.push_back(root->data);
+    inordersum(root->right, v);
+}
+bool twoSumInBST(Node *root, int target)
+{
+    // Write your code here
+    vector<int> v;
+    inordersum(root, v);
+    int i = 0;
+    int j = v.size() - 1;
+    while (i < j)
+    {
+        int sum = v[i] + v[j];
+        if (sum == target)
+        {
+            return true;
+        }
+        else if (sum > target)
+            j--;
+
+        else
+            i++;
+    }
+    return false;
+}
