@@ -106,3 +106,40 @@ int kthSmallest(Node *root, int k)
     int ans = solve(root, index, k);
     return ans;
 }
+
+// Lowest Common Ancestor of a Binary Search Tree--------------------------------------
+// there are Two approch
+// 1) iterative approch
+Node *LCA(Node *root, int n1, int n2)
+{
+    // Your code
+    // Node * temp = root;
+    while (root != NULL)
+    {
+        if (root->data < n1 && root->data < n2)
+        {
+            root = root->right;
+        }
+        else if (root->data > n1 && root->data > n2)
+        {
+            root = root->left;
+        }
+        else
+        {
+            return root;
+        }
+    }
+}
+
+// 2) recursive approch
+
+TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q)
+{
+    if (root == NULL || p->val == root->val || q->val == root->val)
+        return root;
+    if (p->val < root->val && q->val < root->val)
+        return lowestCommonAncestor(root->left, p, q);
+    if (p->val > root->val && q->val > root->val)
+        return lowestCommonAncestor(root->right, p, q);
+    return root;
+}
