@@ -1,0 +1,9 @@
+q.enque(2);
+    q.enque(2);
+    q.enque(2);
+    q.enque(2);
+    q.enque(2);
+    q.enque(2);
+    q.enque(2);
+    q.enque(2);
+    q.enque(2);
